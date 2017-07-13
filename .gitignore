@@ -1,0 +1,10 @@
+syntax: glob
+.idea
+.settings
+target
+RemoteSystemsTempFiles
+build
+bin
+.classpath
+.project
+.DS_Store
