@@ -1,9 +1,16 @@
 package se.oxidev.animtools64;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -601,11 +608,16 @@ public class TestController extends BaseController {
 				
 				System.out.println("Empty directory created: " + newProjectPathOnly);
 				
-				if (CommonFunctions.SaveStringAsFile("hej o hå", newProjectFile)) {
-					
+				ObjectMapper mapper = new ObjectMapper();
+
+				try {
+					mapper.writeValue(new FileOutputStream(newProjectFile), animFrames);
 					System.out.println("Created file: " + newProjectFile);
 					
+				} catch (Exception e) {
+					System.out.println("Error mapping JSON");					
 				}
+				
 			}
 			else {
 				
