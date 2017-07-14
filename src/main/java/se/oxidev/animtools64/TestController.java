@@ -1,6 +1,7 @@
 package se.oxidev.animtools64;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
@@ -51,6 +52,7 @@ public class TestController extends BaseController {
 	private boolean mousePressed = false;
 	private int selectedColor = 15;
 	private int selectedColorRight = 0;
+	private String loadedProject = "";
 	private int zoom = 1;
 	private double opacity = 0.3;
 	private Gfx gfx = new Gfx();
@@ -59,7 +61,7 @@ public class TestController extends BaseController {
 	private Label labelStatus;
 
 	@FXML
-	private TextField textFrame;
+	private TextField textFrame, textFrameUnderlay;
 
 	@FXML
 	private Button buttonBrowse, buttonNextFrame, buttonPrevFrame;
@@ -86,18 +88,6 @@ public class TestController extends BaseController {
 
 		System.out.println("->" + i);
 
-		AnimFrame af = new AnimFrame(1, "pic.jpg");
-
-		animFrames.add(af);
-		animFrames.add(new AnimFrame(2, ""));
-		animFrames.add(new AnimFrame(3, "pic.jpg"));
-
-		for (AnimFrame a : animFrames) {
-			System.out.println("frame: " + a.frameNo);
-		}
-
-		this.currentAnimFrame = animFrames.get(this.currentFrameIndex);
-
 		canvasPaint.setWidth(stackPanePaint.getPrefWidth());
 		canvasPaint.setHeight(stackPanePaint.getPrefHeight());
 		canvasColors.setWidth(paneColors.getPrefWidth());
@@ -115,6 +105,24 @@ public class TestController extends BaseController {
 		System.out.println("settingGridColor: " + value);
 		// ---------------------------------------------
 
+		// ---------------------------------------------
+		// Restore previous project
+		// ---------------------------------------------
+		loadedProject = prefs.get("settingLoadedProject", "");
+		System.out.println("loadedProject: " + loadedProject);
+		if (loadedProject == "") {
+			animFrames.add(new AnimFrame(1, ""));
+			this.getStage().setTitle("animtools64 - [no project]");
+		}
+
+		for (AnimFrame a : animFrames) {
+			System.out.println("frame: " + a.frameNo);
+		}
+		// ---------------------------------------------
+
+		this.currentAnimFrame = animFrames.get(this.currentFrameIndex);
+
+		
 		// Zoom combobox
 		ObservableList<String> listZoom = FXCollections.observableArrayList("1X", "2X", "4X");
 		comboZoom.setItems(listZoom);
@@ -158,6 +166,16 @@ public class TestController extends BaseController {
 		Menu menuEdit = new Menu("Edit");
 		Menu menuOptions = new Menu("Options");
 		menuBar.getMenus().addAll(menuFile, menuEdit, menuOptions);
+
+		// --- FILE > NEW PROJECT
+		MenuItem menuItemNewProject = new MenuItem("New project");
+		menuItemNewProject.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				newProject();
+			}
+		});
+		menuFile.getItems().add(menuItemNewProject);
 
 		// --- FILE > EXIT
 		MenuItem menuItemExit = new MenuItem("Exit");
@@ -226,20 +244,13 @@ public class TestController extends BaseController {
 	public void handleButtonOnAction(ActionEvent event) {
 
 		if (event.getSource() == buttonBrowse) {
-			browseDirectory(event);
+			String tmp = CommonFunctions.browseDirectory(event);
 		} else if (event.getSource() == buttonNextFrame) {
 			showFrame(currentFrameIndex + 1);
 		} else if (event.getSource() == buttonPrevFrame) {
 			showFrame(currentFrameIndex - 1);
 		}
 
-	}
-
-	private void browseDirectory(ActionEvent event) {
-		Stage stage = Stage.class.cast(Control.class.cast(event.getSource()).getScene().getWindow());
-		DirectoryChooser directoryChooser = new DirectoryChooser();
-		File selectedDirectory = directoryChooser.showDialog(stage);
-		System.out.println(selectedDirectory.getAbsolutePath());
 	}
 
 	public void handleCheckOnAction(ActionEvent event) {
@@ -345,6 +356,7 @@ public class TestController extends BaseController {
 		buttonNextFrame.setDisable((index >= animFrames.size() - 1));
 
 		textFrame.setText((currentFrameIndex + 1) + " / " + animFrames.size());
+		textFrameUnderlay.setText(animFrames.get(currentFrameIndex).imageName);
 
 		redrawAll();
 
@@ -566,6 +578,49 @@ public class TestController extends BaseController {
 
 	}
 
+	public void newProject() {
+		
+		File f = CommonFunctions.getFileUsingFileChooser(this.getStage(), "New project");
+		
+		String newProjectPathOnly = (f.getAbsolutePath() != null) ? f.getAbsolutePath() : "";
+		String newProjectName = f.getName();
+		String newProjectFile = newProjectPathOnly + File.separator + newProjectName + ".at64proj";
+
+		if (newProjectPathOnly != "") {
+
+			if (CommonFunctions.DirectoryExists(newProjectPathOnly)) {
+
+				// New project, but folder exists. Clear!
+				
+				CommonFunctions.EmptyDirectoryAndDelete(newProjectPathOnly);
+				System.out.println("Directory emptied and deleted");
+				
+			}
+			
+			if (CommonFunctions.MkDirs(newProjectPathOnly)) {
+				
+				System.out.println("Empty directory created: " + newProjectPathOnly);
+				
+				if (CommonFunctions.SaveStringAsFile("hej o hå", newProjectFile)) {
+					
+					System.out.println("Created file: " + newProjectFile);
+					
+				}
+			}
+			else {
+				
+				// TODO: ALERT Directory creation failed.			
+				System.out.println("Directory creation failed");
+
+			}
+
+		}
+		else {
+			System.out.println("Nothing was selected");
+		}
+				
+	}
+	
 	public int getWhatever() {
 		return whatever;
 	}

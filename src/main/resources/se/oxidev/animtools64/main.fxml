@@ -45,6 +45,6 @@
          </font>
       </Button>
       <Label layoutX="215.0" layoutY="48.0" text="Frame underlay" textFill="WHITE" />
-      <TextField fx:id="textFrame1" editable="false" layoutX="327.0" layoutY="42.0" prefHeight="27.0" prefWidth="180.0" text="pic.jpg" />
+      <TextField fx:id="textFrameUnderlay" editable="false" layoutX="327.0" layoutY="42.0" prefHeight="27.0" prefWidth="180.0" text="pic.jpg" />
    </children>
 </Pane>
