@@ -82,6 +82,5 @@ public class CommonFunctions {
         } catch (IOException ex) {
         		return false;
         }         
-    }
-    
+    }    
 }

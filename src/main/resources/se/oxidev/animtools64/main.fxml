@@ -31,7 +31,7 @@
       <ScrollBar fx:id="scrollBarY" layoutX="656.0" layoutY="159.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="17.0" />
       <CheckBox fx:id="checkGrid" alignment="CENTER_RIGHT" layoutX="275.0" layoutY="94.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleCheckOnAction" prefHeight="18.0" prefWidth="92.0" text="Grid" textFill="WHITE" />
       <ColorPicker fx:id="colorPickerGrid" layoutX="379.0" layoutY="89.0" onAction="#handleColorPickerOnAction" prefHeight="27.0" prefWidth="128.0" />
-      <Button fx:id="buttonBrowse" layoutX="73.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleButtonOnAction" text="Button" />
+      <Button fx:id="buttonBrowse" layoutX="73.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleButtonOnAction" text="Button" />
       <Label layoutX="15.0" layoutY="48.0" text="Frame" textFill="WHITE" />
       <TextField fx:id="textFrame" editable="false" layoutX="73.0" layoutY="43.0" prefHeight="27.0" prefWidth="59.0" text="1 / 1" />
       <Button fx:id="buttonPrevFrame" layoutX="132.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonOnAction" prefHeight="25.0" prefWidth="26.0" text="-">
