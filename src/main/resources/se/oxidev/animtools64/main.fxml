@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="821.0" style="-fx-background-color: #909090;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.oxidev.animtools64.TestController">
+<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="821.0" style="-fx-background-color: #909090;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se.oxidev.animtools64.MainController">
    <children>
       <Label fx:id="labelStatus" layoutX="15.0" layoutY="137.0" prefHeight="17.0" prefWidth="300.0" text="x: 0, y: 0" />
       <Pane fx:id="paneColors" layoutX="683.0" layoutY="159.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: aaaaaa;">

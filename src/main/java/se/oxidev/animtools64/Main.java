@@ -12,7 +12,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		TestController controller = (TestController)Utils.showDialog("main.fxml", "animtools64", Integer.valueOf(1));
+		MainController controller = (MainController)Utils.showDialog("main.fxml", "animtools64", Integer.valueOf(1));
 		//controller.postInit(primaryStage);
 		controller.getStage().showAndWait();
 

@@ -1,15 +1,10 @@
 package se.oxidev.animtools64;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javafx.beans.value.ChangeListener;
@@ -25,7 +20,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -40,12 +34,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
 
-public class TestController extends BaseController {
+public class MainController extends BaseController {
 
-	Preferences prefs = Preferences.userNodeForPackage(TestController.class);
+	Preferences prefs = Preferences.userNodeForPackage(MainController.class);
 
 	private final ArrayList<AnimFrame> animFrames = new ArrayList<AnimFrame>();
 
@@ -103,7 +95,7 @@ public class TestController extends BaseController {
 		// ---------------------------------------------
 		// Restore preferences
 		// ---------------------------------------------
-		Preferences prefs = Preferences.userNodeForPackage(TestController.class);
+		Preferences prefs = Preferences.userNodeForPackage(MainController.class);
 		// settingOpacity
 		this.opacity = Double.valueOf(prefs.get("settingOpacity", "0.3"));
 		// settingGridColor
@@ -251,7 +243,7 @@ public class TestController extends BaseController {
 	public void handleButtonOnAction(ActionEvent event) {
 
 		if (event.getSource() == buttonBrowse) {
-			String tmp = CommonFunctions.browseDirectory(event);
+			//String tmp = CommonFunctions.browseDirectory(event);
 		} else if (event.getSource() == buttonNextFrame) {
 			showFrame(currentFrameIndex + 1);
 		} else if (event.getSource() == buttonPrevFrame) {
@@ -608,8 +600,8 @@ public class TestController extends BaseController {
 				
 				System.out.println("Empty directory created: " + newProjectPathOnly);
 				
-				ObjectMapper mapper = new ObjectMapper();
-
+				ObjectMapper mapper = JacksonObjectMapper.getObjectMapper();
+				
 				try {
 					mapper.writeValue(new FileOutputStream(newProjectFile), animFrames);
 					System.out.println("Created file: " + newProjectFile);
